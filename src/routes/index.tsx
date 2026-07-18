@@ -68,6 +68,7 @@ export const Route = createFileRoute("/")({ component: Landing });
 const nav = [
   { href: "#home", label: "Home" },
   { href: "#about", label: "About Us" },
+  { href: "#bmi", label: "BMI Calculator" },
   { href: "#programs", label: "Programs" },
   { href: "#testimonials", label: "Testimonials" },
   { href: "#gallery", label: "Gallery" },
@@ -221,11 +222,118 @@ const faqs = [
   },
 ];
 
+type BmiUnit = "metric" | "imperial";
+
+const bmiMin = 10;
+const bmiMax = 40;
+
+const bmiBands = [
+  {
+    min: 0,
+    max: 18.5,
+    label: "Underweight",
+    risk: "Possible associated conditions: iron deficiency anemia, vitamin deficiencies, and lower immunity.",
+    color: "text-sky-600",
+    bg: "bg-sky-50",
+  },
+  {
+    min: 18.5,
+    max: 25,
+    label: "Healthy",
+    risk: "No specific disease signal from BMI alone; continue regular habits and routine checkups.",
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
+  },
+  {
+    min: 25,
+    max: 30,
+    label: "Overweight",
+    risk: "Possible associated conditions: prediabetes, high blood pressure, high cholesterol, and fatty liver.",
+    color: "text-amber-600",
+    bg: "bg-amber-50",
+  },
+  {
+    min: 30,
+    max: 35,
+    label: "Obesity Class I",
+    risk: "Possible associated conditions: type 2 diabetes, sleep apnea, joint pain, and fatty liver.",
+    color: "text-orange-600",
+    bg: "bg-orange-50",
+  },
+  {
+    min: 35,
+    max: 40,
+    label: "Obesity Class II",
+    risk: "Possible associated conditions: heart disease, stroke risk, insulin resistance, and osteoarthritis.",
+    color: "text-rose-600",
+    bg: "bg-rose-50",
+  },
+  {
+    min: 40,
+    max: Number.POSITIVE_INFINITY,
+    label: "Obesity Class III",
+    risk: "Possible associated conditions: severe sleep apnea, cardiovascular disease, metabolic syndrome, and mobility issues.",
+    color: "text-red-700",
+    bg: "bg-red-50",
+  },
+] as const;
+
+const bmiGaugeSegments = [
+  { min: 10, max: 18.5, color: "#38bdf8" },
+  { min: 18.5, max: 25, color: "#22c55e" },
+  { min: 25, max: 30, color: "#f59e0b" },
+  { min: 30, max: 35, color: "#f97316" },
+  { min: 35, max: 40, color: "#ef4444" },
+] as const;
+
+function getBmiBand(bmi: number) {
+  return (
+    bmiBands.find((band) => bmi >= band.min && bmi < band.max) ?? bmiBands[bmiBands.length - 1]
+  );
+}
+
+function getGaugeAngle(bmi: number) {
+  const clamped = Math.min(bmiMax, Math.max(bmiMin, bmi));
+  const ratio = (clamped - bmiMin) / (bmiMax - bmiMin);
+  return -90 + ratio * 180;
+}
+
+function getGaugeGradient() {
+  const stops = bmiGaugeSegments
+    .map((segment) => {
+      const start = ((segment.min - bmiMin) / (bmiMax - bmiMin)) * 180;
+      const end = ((segment.max - bmiMin) / (bmiMax - bmiMin)) * 180;
+      return `${segment.color} ${start}deg ${end}deg`;
+    })
+    .join(", ");
+
+  return `conic-gradient(from 180deg, ${stops})`;
+}
+
+function describeGaugeArc(startAngle: number, endAngle: number, radius = 82) {
+  const startRadians = (startAngle * Math.PI) / 180;
+  const endRadians = (endAngle * Math.PI) / 180;
+  const startX = 100 + radius * Math.cos(startRadians);
+  const startY = 100 + radius * Math.sin(startRadians);
+  const endX = 100 + radius * Math.cos(endRadians);
+  const endY = 100 + radius * Math.sin(endRadians);
+  const largeArcFlag = endAngle - startAngle > 180 ? 1 : 0;
+
+  return `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`;
+}
+
 function Landing() {
   const [storyIdx, setStoryIdx] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#home");
+  const [bmiUnit, setBmiUnit] = useState<BmiUnit>("metric");
+  const [weight, setWeight] = useState("");
+  const [heightCm, setHeightCm] = useState("");
+  const [heightFt, setHeightFt] = useState("");
+  const [heightIn, setHeightIn] = useState("");
+  const [bmiValue, setBmiValue] = useState<number | null>(null);
+  const [bmiError, setBmiError] = useState<string | null>(null);
   const scrollLockRef = useRef(false);
   const clickTargetRef = useRef<string | null>(null);
   const clickTimeoutRef = useRef<number | null>(null);
@@ -306,6 +414,87 @@ function Landing() {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  const calculateBmi = () => {
+    const parsedWeight = Number.parseFloat(weight);
+
+    const hasMetricInputs = bmiUnit === "metric" && weight.trim() && heightCm.trim();
+    const hasImperialInputs =
+      bmiUnit === "imperial" && weight.trim() && heightFt.trim() && heightIn.trim();
+
+    if (!hasMetricInputs && !hasImperialInputs) {
+      setBmiError(null);
+      setBmiValue(null);
+      return;
+    }
+
+    if (!Number.isFinite(parsedWeight) || parsedWeight <= 0) {
+      setBmiError("Please enter a valid weight greater than 0.");
+      setBmiValue(null);
+      return;
+    }
+
+    let calculatedBmi = 0;
+
+    if (bmiUnit === "metric") {
+      const parsedHeightCm = Number.parseFloat(heightCm);
+      if (!Number.isFinite(parsedHeightCm) || parsedHeightCm <= 0) {
+        setBmiError("Please enter a valid height in centimeters.");
+        setBmiValue(null);
+        return;
+      }
+      if (parsedHeightCm < 80 || parsedHeightCm > 260) {
+        setBmiError("Height looks out of expected adult range. Please verify your entry.");
+        setBmiValue(null);
+        return;
+      }
+      const heightInMeters = parsedHeightCm / 100;
+      calculatedBmi = parsedWeight / (heightInMeters * heightInMeters);
+    } else {
+      const parsedFeet = Number.parseFloat(heightFt || "0");
+      const parsedInches = Number.parseFloat(heightIn || "0");
+
+      if (!Number.isFinite(parsedFeet) || !Number.isFinite(parsedInches)) {
+        setBmiError("Please enter valid feet and inches values.");
+        setBmiValue(null);
+        return;
+      }
+      if (parsedFeet < 0 || parsedInches < 0 || parsedInches >= 12) {
+        setBmiError("Use valid height values. Inches should be between 0 and 11.");
+        setBmiValue(null);
+        return;
+      }
+
+      const totalInches = parsedFeet * 12 + parsedInches;
+      if (totalInches <= 0) {
+        setBmiError("Please enter a valid height in feet and inches.");
+        setBmiValue(null);
+        return;
+      }
+
+      calculatedBmi = (703 * parsedWeight) / (totalInches * totalInches);
+    }
+
+    if (!Number.isFinite(calculatedBmi) || calculatedBmi <= 0) {
+      setBmiError("Unable to calculate BMI with these values. Please check your inputs.");
+      setBmiValue(null);
+      return;
+    }
+
+    setBmiError(null);
+    setBmiValue(calculatedBmi);
+  };
+
+  useEffect(() => {
+    calculateBmi();
+  }, [bmiUnit, weight, heightCm, heightFt, heightIn]);
+
+  const handleBmiCalculate = () => {
+    calculateBmi();
+  };
+
+  const bmiBand = bmiValue ? getBmiBand(bmiValue) : null;
+  const gaugeAngle = getGaugeAngle(bmiValue ?? 22);
 
   return (
     <div className="min-h-screen bg-[var(--color-cream)] text-foreground">
@@ -489,6 +678,179 @@ function Landing() {
                 Our programs focus on nutrition, healthy habits, and lifestyle coaching. Individual
                 results vary and our services are not intended to diagnose, treat, cure, or prevent
                 any disease.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BMI CALCULATOR */}
+      <section id="bmi" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <h2 className="text-center text-3xl md:text-4xl font-extrabold">BMI Risk Meter</h2>
+          <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto">
+            Check your Body Mass Index and understand possible health risk levels with a
+            speedometer-style visual.
+          </p>
+          <div className="mt-10 grid lg:grid-cols-2 gap-6">
+            <div className="bg-secondary/40 border border-border rounded-2xl p-5 md:p-6">
+              <div className="text-sm font-semibold">Enter Your Details</div>
+              <div className="mt-4 inline-flex rounded-full border border-border p-1 bg-white">
+                <button
+                  type="button"
+                  onClick={() => setBmiUnit("metric")}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${bmiUnit === "metric" ? "bg-primary text-white" : "text-foreground/80 hover:text-foreground"}`}
+                >
+                  Metric
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBmiUnit("imperial")}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${bmiUnit === "imperial" ? "bg-primary text-white" : "text-foreground/80 hover:text-foreground"}`}
+                >
+                  Imperial
+                </button>
+              </div>
+
+              <div className="mt-5 grid sm:grid-cols-2 gap-3">
+                <label className="text-sm">
+                  <span className="font-medium">Weight ({bmiUnit === "metric" ? "kg" : "lb"})</span>
+                  <input
+                    type="number"
+                    min="1"
+                    step="0.1"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-border bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-primary/30"
+                    placeholder={bmiUnit === "metric" ? "e.g. 70" : "e.g. 154"}
+                  />
+                </label>
+
+                {bmiUnit === "metric" ? (
+                  <label className="text-sm">
+                    <span className="font-medium">Height (cm)</span>
+                    <input
+                      type="number"
+                      min="1"
+                      step="0.1"
+                      value={heightCm}
+                      onChange={(e) => setHeightCm(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-border bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-primary/30"
+                      placeholder="e.g. 170"
+                    />
+                  </label>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className="text-sm">
+                      <span className="font-medium">Height (ft)</span>
+                      <input
+                        type="number"
+                        min="0"
+                        step="1"
+                        value={heightFt}
+                        onChange={(e) => setHeightFt(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-border bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-primary/30"
+                        placeholder="5"
+                      />
+                    </label>
+                    <label className="text-sm">
+                      <span className="font-medium">Height (in)</span>
+                      <input
+                        type="number"
+                        min="0"
+                        max="11"
+                        step="1"
+                        value={heightIn}
+                        onChange={(e) => setHeightIn(e.target.value)}
+                        className="mt-1 w-full rounded-xl border border-border bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-primary/30"
+                        placeholder="7"
+                      />
+                    </label>
+                  </div>
+                )}
+              </div>
+
+              {bmiError && (
+                <p className="mt-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                  {bmiError}
+                </p>
+              )}
+
+              <button
+                type="button"
+                onClick={handleBmiCalculate}
+                className="mt-5 inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-primary-foreground rounded-full px-5 py-2.5 text-sm font-semibold transition-colors"
+              >
+                <Scale className="h-4 w-4" /> Calculate BMI
+              </button>
+            </div>
+
+            <div className="bg-(--color-cream) border border-border rounded-2xl p-5 md:p-6">
+              <div className="text-sm font-semibold">Your Speedometer Result</div>
+              <div className="relative mt-4 mx-auto h-40 w-full max-w-[22rem] overflow-hidden">
+                <svg
+                  viewBox="0 0 200 120"
+                  className="absolute inset-x-0 top-0 h-44 w-full overflow-visible"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <clipPath id="bmiGaugeClip">
+                      <path d="M 20 100 A 80 80 0 0 1 180 100 L 180 120 L 20 120 Z" />
+                    </clipPath>
+                  </defs>
+
+                  <g clipPath="url(#bmiGaugeClip)">
+                    {bmiGaugeSegments.map((segment) => {
+                      const startAngle = 180 + ((segment.min - bmiMin) / (bmiMax - bmiMin)) * 180;
+                      const endAngle = 180 + ((segment.max - bmiMin) / (bmiMax - bmiMin)) * 180;
+                      return (
+                        <path
+                          key={`${segment.min}-${segment.max}`}
+                          d={describeGaugeArc(startAngle, endAngle)}
+                          fill="none"
+                          stroke={segment.color}
+                          strokeWidth="18"
+                          strokeLinecap="butt"
+                        />
+                      );
+                    })}
+                  </g>
+
+                  <circle cx="100" cy="100" r="48" fill="var(--color-cream)" />
+                </svg>
+
+                <div
+                  className="absolute bottom-0 left-1/2 h-28 w-1 origin-bottom rounded-full bg-foreground transition-transform duration-500"
+                  style={{ transform: `translateX(-50%) rotate(${gaugeAngle}deg)` }}
+                />
+                <div className="absolute bottom-0 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full bg-foreground" />
+              </div>
+
+              <div className="mt-2 text-center">
+                <div className="text-3xl font-extrabold">
+                  {bmiValue ? bmiValue.toFixed(1) : "--"}
+                </div>
+                <div className="text-xs text-muted-foreground">BMI</div>
+              </div>
+
+              <div
+                className={`mt-3 rounded-xl border border-border px-4 py-3 ${bmiBand ? bmiBand.bg : "bg-white"}`}
+              >
+                <div className="text-xs text-muted-foreground">Category</div>
+                <div className={`text-lg font-bold ${bmiBand ? bmiBand.color : "text-foreground"}`}>
+                  {bmiBand ? bmiBand.label : "Calculate to view your category"}
+                </div>
+                <p className="mt-1 text-sm text-foreground/80">
+                  {bmiBand
+                    ? bmiBand.risk
+                    : "This meter helps you quickly understand possible lifestyle-related risk levels."}
+                </p>
+              </div>
+
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                BMI is a screening indicator for adults, not a diagnosis. These examples are for
+                general guidance only. Athletes, pregnant women, and individuals with specific
+                medical conditions may need more detailed clinical assessment.
               </p>
             </div>
           </div>
@@ -799,6 +1161,7 @@ function Landing() {
               {[
                 { label: "Home", href: "#home" },
                 { label: "About Us", href: "#about" },
+                { label: "BMI Calculator", href: "#bmi" },
                 { label: "Our Programs", href: "#programs" },
                 { label: "Gallery", href: "#gallery" },
                 { label: "Testimonials", href: "#testimonials" },
