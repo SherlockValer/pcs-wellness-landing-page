@@ -47,30 +47,47 @@
   --card-foreground: oklch(0.24 0.02 240);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.24 0.02 240);
-  --primary: oklch(0.58 0.18 143);           /* leafy green */
+  --primary: oklch(0.58 0.18 143); /* leafy green */
   --primary-foreground: oklch(1 0 0);
   --primary-dark: oklch(0.48 0.17 143);
   --secondary: oklch(0.96 0.03 140);
   --secondary-foreground: oklch(0.35 0.12 143);
   --muted: oklch(0.97 0.01 120);
-  --muted-foreground: oklch(0.50 0.02 240);
+  --muted-foreground: oklch(0.5 0.02 240);
   --accent: oklch(0.94 0.06 130);
   --accent-foreground: oklch(0.35 0.12 143);
-  --destructive: oklch(0.60 0.22 27);
+  --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.92 0.01 130);
   --input: oklch(0.92 0.01 130);
   --ring: oklch(0.58 0.18 143);
-  --cream: oklch(0.985 0.01 90);              /* page bg */
+  --cream: oklch(0.985 0.01 90); /* page bg */
   --heart: oklch(0.62 0.22 27);
 }
 
-.dark { --background: oklch(0.129 0.042 264.695); }
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+}
+
+/* Devanagari (Hindi/Marathi) fonts — Poppins & Dancing Script have no
+   Devanagari glyphs, so swap to Mukta when the page language is hi or mr.
+   The i18n provider sets this lang attribute on <html>. */
+:root[lang="hi"],
+:root[lang="mr"] {
+  --font-display: "Mukta", "Poppins", "Segoe UI", sans-serif;
+  --font-body: "Mukta", "Poppins", "Segoe UI", sans-serif;
+  --font-script: "Mukta", "Poppins", sans-serif;
+}
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
-  section[id], footer[id] {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  section[id],
+  footer[id] {
     scroll-margin-top: 6rem;
   }
   body {
@@ -79,7 +96,16 @@
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
 }
 
-@utility script { font-family: var(--font-script); }
+@utility script {
+  font-family: var(--font-script);
+}
