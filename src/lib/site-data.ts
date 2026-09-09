@@ -1,22 +1,27 @@
 // Static site content and contact constants. Section components import from
 // here so the landing route stays thin and the data is reusable.
 import {
-  Scale,
-  Heart,
-  Zap,
-  Baby,
-  Leaf,
-  Bone,
-  Flower2,
-  UsersRound,
   Activity,
-  Droplet,
-  Moon,
-  Smile,
+  Baby,
+  Bone,
   CalendarDays,
-  User,
   ClipboardList,
+  Droplet,
+  Facebook,
+  Flower2,
+  Heart,
+  Instagram,
+  Leaf,
   LifeBuoy,
+  MessageCircle,
+  Moon,
+  Scale,
+  Smile,
+  User,
+  UsersRound,
+  Youtube,
+  Zap,
+  type LucideIcon,
 } from "lucide-react";
 import sGanesh from "@/assets/story-ganesh.jpg";
 import sGanesh700 from "@/assets/story-ganesh-700.jpg";
@@ -30,15 +35,14 @@ import sRamrao from "@/assets/story-ramrao.jpg";
 import sRamrao700 from "@/assets/story-ramrao-700.jpg";
 import sUttamrao from "@/assets/story-uttamrao.jpg";
 import sUttamrao700 from "@/assets/story-uttamrao-700.jpg";
-
-import g1 from "@/assets/gallery-1.jpg";
-import g2 from "@/assets/gallery-2.jpg";
-import g3 from "@/assets/gallery-3.jpg";
-import g4 from "@/assets/gallery-4.jpg";
-import g5 from "@/assets/gallery-5.jpg";
-import g6 from "@/assets/gallery-6.jpg";
+import sSantosh from "@/assets/story-santosh.jpg";
+import sSantosh700 from "@/assets/story-santosh-700.jpg";
 
 // --- Contact constants ---
+// Canonical deployed URL (no trailing slash) — used for social/OG sharing,
+// JSON-LD structured data and the sitemap. Replace with your real domain.
+export const SITE_URL = "https://pcswellbeingworld.in";
+
 export const CLUB_ADDRESS =
   "Shop No 105, First Floor, Biz Square, Beed Bypass Rd, above Ratnaprabha Motors, near Bajaj Hospital, Disha Nagari, Chhatrapati Sambhajinagar, Maharashtra 431005";
 
@@ -54,6 +58,16 @@ export const BOOKING_WHATSAPP_NUMBER = "917048378091";
 
 // Phone numbers shown in the footer.
 export const CLUB_PHONES = ["9373434917", "7048378091", "9834379826"];
+
+// --- Social media links (footer icons) ---
+// Fill in each real profile URL below. Remove any entry your club doesn't use
+// and the icon disappears automatically. To change an icon, swap it for any
+// lucide-react icon (e.g. import { Linkedin } from "lucide-react").
+export const socialLinks: { label: string; href: string; icon: LucideIcon }[] = [
+  // { label: "Facebook", href: "#", icon: Facebook },
+  { label: "Instagram", href: "https://www.instagram.com/pcs_wellbeing_world", icon: Instagram },
+  { label: "YouTube", href: "https://www.youtube.com/@pcswellbeingworld", icon: Youtube },
+];
 
 // --- Nav ---
 export const nav = [
@@ -202,29 +216,76 @@ export const stories = [
     name: "Kaushallya Rathod",
   },
   {
-    img: sGanesh,
-    imgMobile: sGanesh700,
-    quoteKey: "stories.ganesh.quote",
-    resultKey: "stories.ganesh.result",
-    name: "Ganesh",
-  },
-  {
     img: sRamrao,
     imgMobile: sRamrao700,
     quoteKey: "stories.ramrao.quote",
     resultKey: "stories.ramrao.result",
-    name: "Ramrao",
+    name: "Ramrao Pawar",
   },
   {
     img: sUttamrao,
     imgMobile: sUttamrao700,
     quoteKey: "stories.uttamrao.quote",
     resultKey: "stories.uttamrao.result",
-    name: "Uttamrao",
+    name: "Uttamrao Rathod",
+  },
+  {
+    img: sGanesh,
+    imgMobile: sGanesh700,
+    quoteKey: "stories.ganesh.quote",
+    resultKey: "stories.ganesh.result",
+    name: "Ganesh Shinde",
+  },
+  {
+    img: sSantosh,
+    imgMobile: sSantosh700,
+    quoteKey: "stories.santosh.quote",
+    resultKey: "stories.santosh.result",
+    name: "Santosh Chavan",
   },
 ];
 
-export const gallery = [g1, g2, g3, g4, g5, g6];
+// --- Video testimonials (YouTube, unlisted) ---
+// Full unlisted playlist:
+// https://www.youtube.com/playlist?list=PLXm6bqKm0qOk
+// This is the SSR/no-JS fallback and the source used before the live server
+// fetch (src/lib/live-video-stories.ts) refreshes the cards. To update it
+// manually, run `npm run sync:videos` (names come from the video titles).
+export const videoStories = [
+  { videoId: "8yMjGQCttpU", name: "Niraj Patni" },
+  { videoId: "a7xbA77hKJc", name: "Ashroba Khating" },
+  { videoId: "bNQ0-HJojM4", name: "Mahesh Shinde" },
+  { videoId: "FnjO16Z6jEU", name: "Manchak Ghadge" },
+];
+
+// High-res 16:9 poster thumbnails are available for all the unlisted videos.
+export const videoPosterUrl = (videoId: string) =>
+  `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+
+// Privacy-enhanced embed (no cookies / tracking) used in the lightbox player.
+export const videoEmbedUrl = (videoId: string) =>
+  `https://www.youtube-nocookie.com/embed/${videoId}`;
+
+// --- Gallery (community photos) ---
+// Every image inside src/assets/gallery/ is included automatically. To manage
+// the gallery, just drop images into that folder or delete them — no code
+// changes needed. Files are ordered by their leading number, so `.jpg` and
+// `.jpeg` mix freely (e.g. 1.jpg, 2.jpg, ..., 10.jpeg, 11.jpeg). Files without
+// a numeric prefix sort last.
+const galleryImports = import.meta.glob(
+  "../assets/gallery/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}",
+  { eager: true, import: "default" },
+) as Record<string, string>;
+
+const leadingNumber = (key: string) => {
+  const base = key.split("/").pop() ?? key;
+  const match = base.match(/^(\d+)/);
+  return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
+};
+
+export const gallery = Object.keys(galleryImports)
+  .sort((a, b) => leadingNumber(a) - leadingNumber(b) || a.localeCompare(b))
+  .map((key) => galleryImports[key]);
 
 export const faqs = [
   { qKey: "faq.q1", aKey: "faq.a1" },

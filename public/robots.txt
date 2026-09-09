@@ -1,0 +1,7 @@
+# Search engine crawler rules.
+# NOTE: update the Sitemap URL below to match your real deployed domain
+# (it must match SITE_URL in src/lib/site-data.ts).
+User-agent: *
+Allow: /
+
+Sitemap: https://pcswellbeingworld.in/sitemap.xml

@@ -9,11 +9,14 @@ import tsConfigPaths from "vite-tsconfig-paths";
 export default defineConfig(async (env) => {
   const plugins: PluginOption[] = [tailwindcss(), tsConfigPaths({ projects: ["./tsconfig.json"] })];
 
-  // Package the server build with Nitro (Cloudflare Workers target by default;
-  // set an explicit preset to deploy elsewhere, e.g. nitro({ preset: "node-server" })).
+  // Package the server build with Nitro. Choose the target preset from the
+  // environment so the same repo deploys to either host:
+  //   - Vercel builds set VERCEL=1 → Nitro's "vercel" serverless preset.
+  //   - Everything else defaults to Cloudflare Workers.
   if (env.command === "build") {
     const { nitro } = await import("nitro/vite");
-    plugins.push(nitro({ defaultPreset: "cloudflare-module" }));
+    const deployPreset = process.env.VERCEL === "1" ? "vercel" : "cloudflare-module";
+    plugins.push(nitro({ defaultPreset: deployPreset }));
   }
 
   plugins.push(

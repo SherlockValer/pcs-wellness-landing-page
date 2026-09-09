@@ -200,10 +200,23 @@ export const translations = {
         result: "Improved energy & mood",
         quote: "I look forward to my morning sessions now — it keeps me active all day.",
       },
+      santosh: {
+        result: "Lost 10 kg in 5 months",
+        quote: "The team supported me at every step and made healthy living simple.",
+      },
+    },
+    videoTestimonials: {
+      eyebrow: "Watch Their Stories",
+      heading: "Real Members, In Their Own Words",
+      subtitle: "Hear from our members — what changed for them at PC's Wellness Club",
+      disclaimer: "Individual experiences and results vary.",
+      watch: "Play video",
     },
     gallery: {
       heading: "Moments That Inspire",
       alt: "Wellness community",
+      showMore: "Show more photos",
+      showLess: "Show less",
     },
     faq: {
       heading: "Frequently Asked Questions",
@@ -458,10 +471,23 @@ export const translations = {
         result: "बेहतर ऊर्जा और मनोदशा",
         quote: "मैं अब अपने सुबह के सत्रों का इंतज़ार करता हूँ — यह मुझे पूरे दिन सक्रिय रखता है।",
       },
+      santosh: {
+        result: "5 महीनों में 10 किग्रा घटाया",
+        quote: "टीम ने हर कदम पर मेरा साथ दिया और स्वस्थ जीवन को आसान बनाया।",
+      },
+    },
+    videoTestimonials: {
+      eyebrow: "उनकी कहानियाँ देखें",
+      heading: "असली सदस्य, उन्हीं की ज़ुबानी",
+      subtitle: "हमारे सदस्यों से सुनें — PC's वेलनेस क्लब में उनके लिए क्या बदला",
+      disclaimer: "व्यक्तिगत अनुभव और परिणाम भिन्न होते हैं।",
+      watch: "वीडियो चलाएं",
     },
     gallery: {
       heading: "प्रेरित करने वाले क्षण",
       alt: "वेलनेस समुदाय",
+      showMore: "और तस्वीरें देखें",
+      showLess: "कम दिखाएं",
     },
     faq: {
       heading: "अक्सर पूछे जाने वाले प्रश्न",
@@ -715,10 +741,23 @@ export const translations = {
         result: "सुधारलेली ऊर्जा आणि मूड",
         quote: "मी आता माझ्या सकाळच्या सत्रांची वाट पाहतो — यामुळे मी दिवसभर सक्रिय राहतो.",
       },
+      santosh: {
+        result: "5 महिन्यांत 10 किलो कमी",
+        quote: "संघाने प्रत्येक पायरीवर मला साथ दिली आणि निरोगी जीवन सोपे केले.",
+      },
+    },
+    videoTestimonials: {
+      eyebrow: "त्यांच्या कथा पहा",
+      heading: "खरे सदस्य, त्यांच्याच शब्दांत",
+      subtitle: "आमच्या सदस्यांकडून ऐका — PC's वेलनेस क्लबमध्ये त्यांच्यासाठी काय बदलले",
+      disclaimer: "वैयक्तिक अनुभव आणि परिणाम भिन्न असतात.",
+      watch: "व्हिडिओ प्ले करा",
     },
     gallery: {
       heading: "प्रेरणा देणारे क्षण",
       alt: "वेलनेस समुदाय",
+      showMore: "आणखी फोटो पहा",
+      showLess: "कमी दाखवा",
     },
     faq: {
       heading: "वारंवार विचारले जाणारे प्रश्न",
@@ -889,8 +928,17 @@ export type TranslationKey =
   | "stories.ramrao.quote"
   | "stories.uttamrao.result"
   | "stories.uttamrao.quote"
+  | "stories.santosh.result"
+  | "stories.santosh.quote"
+  | "videoTestimonials.eyebrow"
+  | "videoTestimonials.heading"
+  | "videoTestimonials.subtitle"
+  | "videoTestimonials.disclaimer"
+  | "videoTestimonials.watch"
   | "gallery.heading"
   | "gallery.alt"
+  | "gallery.showMore"
+  | "gallery.showLess"
   | "faq.heading"
   | "faq.q1"
   | "faq.a1"

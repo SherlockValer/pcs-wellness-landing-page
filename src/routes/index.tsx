@@ -7,6 +7,7 @@ import { Pillars } from "@/components/pillars";
 import { Journey } from "@/components/journey";
 import { WhyUs } from "@/components/why-us";
 import { Testimonials } from "@/components/testimonials";
+import { VideoTestimonials } from "@/components/video-testimonials";
 import { Gallery } from "@/components/gallery";
 import { Faq } from "@/components/faq";
 import { Booking } from "@/components/booking";
@@ -26,6 +27,7 @@ function Landing() {
       <Journey />
       <WhyUs />
       <Testimonials />
+      <VideoTestimonials />
       <Gallery />
       <Faq />
       <Booking />

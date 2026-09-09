@@ -7,4 +7,9 @@
 # Wrangler / Cloudflare
 .wrangler/
 
+# Nitro / Vercel build output (generated, not committed)
+.output/
+.vercel/
+dist/
+
 node_modules

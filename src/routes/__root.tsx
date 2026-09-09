@@ -7,10 +7,99 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import {
+  CLUB_ADDRESS,
+  CLUB_MAPS_EMBED_URL,
+  CLUB_MAPS_SHARE_URL,
+  CLUB_PHONES,
+  SITE_URL,
+  socialLinks,
+} from "../lib/site-data";
+import { translations } from "../lib/translations";
 import { LanguageProvider } from "../lib/i18n";
+
+// Structured data (JSON-LD) injected once into the page <head> for SEO:
+// a LocalBusiness entry (with address, hours, geo and social profiles) plus an
+// FAQPage using the English FAQ copy.
+const faqEn = translations.en.faq;
+const geoMatch = CLUB_MAPS_EMBED_URL.match(/!3d([\d.]+)!2d([\d.]+)/);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}#business`,
+      name: "PC's Wellness Club",
+      url: SITE_URL,
+      image: `${SITE_URL}/og-image.jpg`,
+      telephone: CLUB_PHONES[0],
+      priceRange: "₹₹",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: CLUB_ADDRESS,
+        addressCountry: "IN",
+      },
+      ...(geoMatch
+        ? {
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: Number(geoMatch[1]),
+              longitude: Number(geoMatch[2]),
+            },
+          }
+        : {}),
+      hasMap: CLUB_MAPS_SHARE_URL,
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          opens: "08:00",
+          closes: "10:00",
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          opens: "17:30",
+          closes: "19:30",
+        },
+      ],
+      sameAs: socialLinks.filter((link) => link.href.startsWith("http")).map((link) => link.href),
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: faqEn.q1,
+          acceptedAnswer: { "@type": "Answer", text: faqEn.a1 },
+        },
+        {
+          "@type": "Question",
+          name: faqEn.q2,
+          acceptedAnswer: { "@type": "Answer", text: faqEn.a2 },
+        },
+        {
+          "@type": "Question",
+          name: faqEn.q3,
+          acceptedAnswer: { "@type": "Answer", text: faqEn.a3 },
+        },
+        {
+          "@type": "Question",
+          name: faqEn.q4,
+          acceptedAnswer: { "@type": "Answer", text: faqEn.a4 },
+        },
+        {
+          "@type": "Question",
+          name: faqEn.q5,
+          acceptedAnswer: { "@type": "Answer", text: faqEn.a5 },
+        },
+      ],
+    },
+  ],
+};
 
 function NotFoundComponent() {
   return (
@@ -87,7 +176,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Personalized nutrition guidance, healthy lifestyle coaching, and a supportive wellness community.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: `${SITE_URL}/og-image.jpg` },
+      { property: "og:image:alt", content: "PC's Wellness Club — community" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
+      { "script:ld+json": structuredData },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -123,6 +217,23 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Enable smooth anchor scrolling only after the page has fully loaded.
+  // Scroll restoration on first load therefore stays instant and the page
+  // does not visibly "slide" upward as it loads.
+  useEffect(() => {
+    const enableSmooth = () => {
+      requestAnimationFrame(() => {
+        document.documentElement.classList.add("smooth-scroll");
+      });
+    };
+    if (document.readyState === "complete") {
+      enableSmooth();
+      return;
+    }
+    window.addEventListener("load", enableSmooth);
+    return () => window.removeEventListener("load", enableSmooth);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,24 +1,13 @@
-import {
-  Clock,
-  Facebook,
-  Instagram,
-  Mail,
-  MapIcon,
-  MapPin,
-  MessageCircle,
-  Phone,
-  Youtube,
-} from "lucide-react";
+import { Clock, Mail, MapIcon, MapPin, Phone } from "lucide-react";
 import logo from "@/assets/logo.png";
 import {
   CLUB_ADDRESS,
   CLUB_MAPS_EMBED_URL,
   CLUB_MAPS_SHARE_URL,
   CLUB_PHONES,
+  socialLinks,
 } from "@/lib/site-data";
 import { useLanguage } from "@/lib/i18n";
-
-const socialLinks = [Facebook, Instagram, Youtube, MessageCircle];
 
 const quickLinks = [
   { href: "#home", labelKey: "nav.home" },
@@ -46,15 +35,22 @@ export function Footer() {
             </div>
           </div>
           <div className="mt-5 flex gap-3">
-            {socialLinks.map((I, i) => (
-              <a
-                key={i}
-                href="#"
-                className="h-9 w-9 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-colors"
-              >
-                <I className="h-4 w-4" />
-              </a>
-            ))}
+            {socialLinks.map(({ href, icon: Icon, label }) => {
+              const isExternal = href.startsWith("http");
+              return (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  title={label}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  className="h-9 w-9 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-colors"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              );
+            })}
           </div>
         </div>
 
@@ -71,7 +67,7 @@ export function Footer() {
           </div>
           <div className="flex gap-3">
             <Mail className="h-5 w-5 text-primary shrink-0" />
-            <span>pcwellnessclub@gmail.com</span>
+            <span>pcswellbeingworld@gmail.com</span>
           </div>
           <div className="flex gap-3">
             <MapPin className="h-5 w-5 text-primary shrink-0" />

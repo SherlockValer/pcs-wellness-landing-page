@@ -83,7 +83,13 @@
   * {
     border-color: var(--color-border);
   }
+  /* Smooth scrolling only once `.smooth-scroll` is present (added by the app
+     after first load). This keeps the initial scroll-restoration instant so
+     the page does not visibly "slide" to the top on first load. */
   html {
+    scroll-behavior: auto;
+  }
+  html.smooth-scroll {
     scroll-behavior: smooth;
   }
   section[id],
