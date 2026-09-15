@@ -11,7 +11,7 @@ export function FloatingButtons() {
       <div className="fixed bottom-0 inset-x-0 z-50 lg:hidden border-t border-border bg-white/95 backdrop-blur">
         <div className="flex gap-2 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
           <a
-            href="tel:+917048378091"
+            href="tel:+919834379826"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-white px-4 py-3 text-sm font-semibold text-primary transition-transform active:scale-[0.98]"
           >
             <Phone className="h-4 w-4" /> {t("floating.call")}

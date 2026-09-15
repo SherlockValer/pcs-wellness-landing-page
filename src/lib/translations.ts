@@ -177,32 +177,54 @@ export const translations = {
     },
     stories: {
       pushpa: {
-        result: "Lost 12 kg in 4 months",
-        quote: "The guidance was practical and easy to follow. I feel more energetic than ever!",
+        result: "Lost 15 kg in 4 months",
+        quote:
+          "If this community didn't exist, I wouldn't be here today either. Not only did my body change, my whole life turned around 360°.",
       },
       niraj: {
-        result: "More energy & better stamina",
-        quote: "My energy levels improved a lot and I feel healthier & happier every day.",
+        result: "Lost 20 kg",
+        quote:
+          "I didn't realize I was overweight. Joining the community, I changed my lifestyle, and now I'm enjoying my ideal weight and a healthy lifestyle.",
       },
       kaushallya: {
-        result: "Lost 8 kg, stayed consistent",
-        quote: "The community here keeps me motivated and consistent.",
-      },
-      ganesh: {
-        result: "Better digestion & sleep",
-        quote: "Simple daily habits that actually fit into my routine.",
+        result: "Fit enough to do all her housework herself",
+        quote:
+          "My heavy body made it impossible to do housework. Now I've let my maid go and do all the work myself, quickly.",
       },
       ramrao: {
-        result: "Lost 15 kg in 6 months",
-        quote: "I feel lighter on my feet and my joints don't hurt anymore.",
+        result: "Lost 24 kg",
+        quote:
+          "Words cannot describe the happiness this community has brought to my family. My late-night friends are gone, and I've made many more early-morning (good) friends.",
       },
       uttamrao: {
-        result: "Improved energy & mood",
-        quote: "I look forward to my morning sessions now — it keeps me active all day.",
+        result: "New mindset & healthier lifestyle",
+        quote:
+          "I retired after serving in the Health Department, but I never knew the true value of health. When I became a student here, my thinking changed and my life changed.",
+      },
+      kishan: {
+        result: "Lost 10 kg",
+        quote:
+          "Since joining the community, it feels like I've been given a new life. Every problem of mine was solved here, and I've become completely medicine-free.",
+      },
+      mahadeo: {
+        result: "Piles resolved — surgery avoided",
+        quote:
+          "I had a piles problem, and the doctors recommended surgery. But when I changed my tea and snacks, my problem was cured and the surgery was avoided too. I'm very happy.",
       },
       santosh: {
-        result: "Lost 10 kg in 5 months",
-        quote: "The team supported me at every step and made healthy living simple.",
+        result: "Lost 22 kg",
+        quote:
+          "I'm retired from the Army. I had the attitude that “I can do everything myself,” but my weight had reached 134 kg. Then I got Sir's number. By calling and joining the community, I lost 22 kg.",
+      },
+      ganesh: {
+        result: "Acidity under control, more confident",
+        quote:
+          "I used to have terrible acidity, which has now reduced. There's a big change in my personality too.",
+      },
+      mahesh: {
+        result: "Healthy growth & weight gain",
+        quote:
+          "For my age, my waist and height were small, and I was thin. No matter what I ate, my weight and height wouldn't increase. Now everything has changed and I'm very happy.",
       },
     },
     videoTestimonials: {
@@ -447,33 +469,54 @@ export const translations = {
     },
     stories: {
       pushpa: {
-        result: "4 महीनों में 12 किग्रा घटाया",
+        result: "4 महीनों में 15 किग्रा घटाया",
         quote:
-          "मार्गदर्शन व्यावहारिक और आसान था। मैं पहले से कहीं ज़्यादा ऊर्जावान महसूस करती हूँ!",
+          "अगर यह Community न होती, तो आज मैं भी न होती। न केवल मेरा शारीरिक बदलाव हुआ, बल्कि मेरी जिंदगी भी 360° बदल गई।",
       },
       niraj: {
-        result: "अधिक ऊर्जा और बेहतर सहनशक्ति",
-        quote: "मेरी ऊर्जा का स्तर बहुत बढ़ गया और मैं हर दिन अधिक स्वस्थ और खुश महसूस करता हूँ।",
+        result: "20 किग्रा घटाया",
+        quote:
+          "मुझे Overweight होने का अहसास नहीं था। Community में आकर मैंने अपनी जीवनशैली बदली, और अब मैं आइडियल Weight और Healthy Lifestyle का आनंद ले रहा हूँ।",
       },
       kaushallya: {
-        result: "8 किग्रा घटाया, निरंतर बनी रहीं",
-        quote: "यहाँ का समुदाय मुझे प्रेरित और निरंतर बनाए रखता है।",
-      },
-      ganesh: {
-        result: "बेहतर पाचन और नींद",
-        quote: "सरल दैनिक आदतें जो वास्तव में मेरी दिनचर्या में फिट होती हैं।",
+        result: "अब सारा घर का काम खुद फुर्ती से करती हैं",
+        quote:
+          "भारी-भरकम शरीर की वजह से मुझसे घर का काम नहीं होता था। अब मैंने अपनी कामवाली (बाई) को हटा दिया है और सब काम खुद फुर्ती से करती हूँ।",
       },
       ramrao: {
-        result: "6 महीनों में 15 किग्रा घटाया",
-        quote: "मैं अपने पैरों में हल्का महसूस करता हूँ और मेरे जोड़ों में दर्द नहीं होता।",
+        result: "24 किग्रा घटाया",
+        quote:
+          "इस Community ने मेरे परिवार में जो खुशियाँ लाई हैं, उन्हें मैं शब्दों में बयान नहीं कर सकता। मेरे रात के (देर तक जागने वाले) दोस्त छूट गए और सुबह वाले (अच्छे) दोस्त ज्यादा बन गए।",
       },
       uttamrao: {
-        result: "बेहतर ऊर्जा और मनोदशा",
-        quote: "मैं अब अपने सुबह के सत्रों का इंतज़ार करता हूँ — यह मुझे पूरे दिन सक्रिय रखता है।",
+        result: "नई सोच और स्वस्थ जीवनशैली",
+        quote:
+          "Health Department में सेवा करके रिटायर्ड हुआ था, लेकिन स्वास्थ्य की असली कीमत मुझे नहीं पता थी। यहाँ आकर जब मैं एक Student बना, तो मेरी सोच बदली और मेरी जिंदगी बदल गई।",
+      },
+      kishan: {
+        result: "10 किग्रा घटाया",
+        quote:
+          "मुझे Community में आकर ऐसा लगता है जैसे नया जीवन मिल गया हो। मेरी हर समस्या यहाँ हल हो गई और मैं बिलकुल Medicine-free हो गया हूँ।",
+      },
+      mahadeo: {
+        result: "बवासीर ठीक — ऑपरेशन टला",
+        quote:
+          "मुझे Piles की समस्या थी और डॉक्टरों ने ऑपरेशन बताया था। लेकिन जब मैंने अपना चाय-नाश्ता बदला, तो मेरी समस्या खत्म हो गई और ऑपरेशन भी टल गया। मैं बहुत खुश हूँ।",
       },
       santosh: {
-        result: "5 महीनों में 10 किग्रा घटाया",
-        quote: "टीम ने हर कदम पर मेरा साथ दिया और स्वस्थ जीवन को आसान बनाया।",
+        result: "22 किग्रा घटाया",
+        quote:
+          "मैं आर्मी से रिटायर्ड हूँ। मेरा Attitude था कि “मैं सब अपने आप कर लूँगा,” लेकिन मेरा वजन 134 kg तक पहुँच गया था। फिर मुझे सर का नंबर मिला। कॉल करके Community के माध्यम से मैंने 22 kg वजन कम किया।",
+      },
+      ganesh: {
+        result: "एसिडिटी कम, आत्मविश्वास बढ़ा",
+        quote:
+          "मुझे बहुत जबरदस्त Acidity की समस्या होती थी, जो अब कम हो गई है। मेरी Personality में भी बहुत बदलाव आया है।",
+      },
+      mahesh: {
+        result: "बेहतर वृद्धि और वजन",
+        quote:
+          "मेरी उम्र के हिसाब से मेरी कमर और कद छोटा था, और मैं दुबला-पतला था। कुछ भी खाने पर वजन और कद नहीं बढ़ता था। अब सब कुछ बदल गया है और मैं बहुत खुश हूँ।",
       },
     },
     videoTestimonials: {
@@ -718,32 +761,54 @@ export const translations = {
     },
     stories: {
       pushpa: {
-        result: "4 महिन्यांत 12 किलो कमी",
-        quote: "मार्गदर्शन व्यावहारिक आणि सोपे होते. मी आधीपेक्षा कितीतरी जास्त उत्साही वाटते!",
+        result: "4 महिन्यांत 15 किलो कमी",
+        quote:
+          "ही Community नसती, तर आज मी पण नसते. केवळ माझ्या शरीरातच बदल झाला नाही, तर माझं संपूर्ण आयुष्य 360° बदलले.",
       },
       niraj: {
-        result: "अधिक ऊर्जा आणि चांगली सहनशक्ती",
-        quote: "माझी उर्जा पातळी खूप सुधारली आणि मी दररोज अधिक निरोगी आणि आनंदी वाटतो.",
+        result: "20 किलो कमी",
+        quote:
+          "मला मी Overweight आहे हे कळलंच नव्हतं. Community मध्ये आल्यावर मी माझी जीवनशैली बदलली, आणि आता मी Ideal Weight आणि Healthy Lifestyle चा आनंद घेत आहे.",
       },
       kaushallya: {
-        result: "8 किलो कमी, सातत्य राखले",
-        quote: "इथला समुदाय मला प्रेरित आणि सातत्याने चालू ठेवतो.",
-      },
-      ganesh: {
-        result: "चांगले पचन आणि झोप",
-        quote: "सोप्या दैनंदिन सवयी ज्या खरोखर माझ्या दिनचर्येत बसतात.",
+        result: "आता सर्व घरकाम स्वतः तडफेने करते",
+        quote:
+          "पूर्वी वजन जास्त असल्यामुळे घरची कामं करणं मला थोडं अवघड जायचं. आता मात्र मी घरकामासाठी बाई ठेवलेली नाही. स्वतःची कामं स्वतःच आनंदाने आणि फुर्तीने करते.",
       },
       ramrao: {
-        result: "6 महिन्यांत 15 किलो कमी",
-        quote: "मला पायांत हलकेपणा वाटतो आणि सांध्यांना आता त्रास होत नाही.",
+        result: "24 किलो कमी",
+        quote:
+          "या Community ने माझ्या कुटुंबात जे आनंद आणले आहेत, ते मी शब्दांत सांगू शकत नाही. माझे रात्रीचे (उशिरा जागरण करणारे) मित्र सुटले आणि सकाळचे (चांगले) मित्र जास्त झाले.",
       },
       uttamrao: {
-        result: "सुधारलेली ऊर्जा आणि मूड",
-        quote: "मी आता माझ्या सकाळच्या सत्रांची वाट पाहतो — यामुळे मी दिवसभर सक्रिय राहतो.",
+        result: "नवी विचारसरणी आणि निरोगी जीवनशैली",
+        quote:
+          "Health Department मध्ये सेवा करून रिटायर्ड झालो होतो, पण आरोग्याची खरी किंमत मला माहीत नव्हती. इथे आल्यावर मी एक विद्यार्थी बनलो, तेव्हा माझी विचारसरणी बदलली आणि माझं आयुष्य बदललं.",
+      },
+      kishan: {
+        result: "10 किलो कमी",
+        quote:
+          "Community मध्ये आल्यावर मला असं वाटतं की नवं आयुष्य मिळालं आहे. माझी प्रत्येक समस्या इथे सुटली आणि मी पूर्णपणे Medicine-free झालो आहे.",
+      },
+      mahadeo: {
+        result: "मूळव्याध बरा — ऑपरेशन टळलं",
+        quote:
+          "मला Piles ची समस्या होती आणि डॉक्टरांनी ऑपरेशन सांगितलं होतं. पण जेव्हा मी माझा चहा-नाश्ता बदलला, तेव्हा माझी समस्या संपली आणि ऑपरेशनही टळलं. मी खूप आनंदी आहे.",
       },
       santosh: {
-        result: "5 महिन्यांत 10 किलो कमी",
-        quote: "संघाने प्रत्येक पायरीवर मला साथ दिली आणि निरोगी जीवन सोपे केले.",
+        result: "22 किलो कमी",
+        quote:
+          "मी आर्मीमधून रिटायर्ड आहे. माझे Attitude होते की “मी सर्व स्वतःच करून घेईन,” पण माझं वजन 134 kg पर्यंत पोहोचलं होतं. नंतर मला सरांचा नंबर मिळाला. कॉल करून Community मार्फत मी 22 kg वजन कमी केलं.",
+      },
+      ganesh: {
+        result: "Acidity नियंत्रित, आत्मविश्वास वाढला",
+        quote:
+          "मला खूप तीव्र Acidity चा त्रास होत होता, जो आता कमी झाला आहे. माझ्या Personality मध्येही खूप बदल झाला आहे.",
+      },
+      mahesh: {
+        result: "चांगली वाढ आणि वजन",
+        quote:
+          "माझ्या वयाच्या तुलनेत माझी कंबर आणि उंची कमी होती, आणि मी अगदी बारीक होतो. काहीही खाल्लं तरी वजन आणि उंची वाढत नव्हती. आता सर्व काही बदललं आहे आणि मी खूप आनंदी आहे.",
       },
     },
     videoTestimonials: {
@@ -930,6 +995,12 @@ export type TranslationKey =
   | "stories.uttamrao.quote"
   | "stories.santosh.result"
   | "stories.santosh.quote"
+  | "stories.kishan.result"
+  | "stories.kishan.quote"
+  | "stories.mahadeo.result"
+  | "stories.mahadeo.quote"
+  | "stories.mahesh.result"
+  | "stories.mahesh.quote"
   | "videoTestimonials.eyebrow"
   | "videoTestimonials.heading"
   | "videoTestimonials.subtitle"

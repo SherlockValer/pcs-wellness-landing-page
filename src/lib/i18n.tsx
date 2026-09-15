@@ -12,6 +12,8 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 const STORAGE_KEY = "pcwc-lang";
+// Region-default cookie set by the server (see src/start.ts).
+const REGION_COOKIE = "pcwc-default-lang";
 
 const LANGUAGE_OPTIONS: { code: Language; label: string }[] = [
   { code: "en", label: "EN" },
@@ -28,10 +30,20 @@ function getNested(obj: unknown, key: string): unknown {
   }, obj);
 }
 
+function readCookie(name: string): string | null {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 function detectLanguage(): Language {
   if (typeof window === "undefined") return "en";
+  // 1. The user's own saved choice always wins.
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === "en" || stored === "hi" || stored === "mr") return stored;
+  // 2. Region-based default (set by the server from the visitor's country).
+  const region = readCookie(REGION_COOKIE);
+  if (region === "en" || region === "hi" || region === "mr") return region;
+  // 3. Fall back to the browser/device language.
   const nav = window.navigator.language.toLowerCase();
   if (nav.startsWith("hi")) return "hi";
   if (nav.startsWith("mr")) return "mr";

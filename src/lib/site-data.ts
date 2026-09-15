@@ -37,6 +37,12 @@ import sUttamrao from "@/assets/story-uttamrao.jpg";
 import sUttamrao700 from "@/assets/story-uttamrao-700.jpg";
 import sSantosh from "@/assets/story-santosh.jpg";
 import sSantosh700 from "@/assets/story-santosh-700.jpg";
+import sKishan from "@/assets/story-kishan.jpg";
+import sKishan700 from "@/assets/story-kishan-700.jpg";
+import sMahadeo from "@/assets/story-mahadeo.jpg";
+import sMahadeo700 from "@/assets/story-mahadeo-700.jpg";
+import sMahesh from "@/assets/story-mahesh.jpg";
+import sMahesh700 from "@/assets/story-mahesh-700.jpg";
 
 // --- Contact constants ---
 // Canonical deployed URL (no trailing slash) — used for social/OG sharing,
@@ -230,11 +236,18 @@ export const stories = [
     name: "Uttamrao Rathod",
   },
   {
-    img: sGanesh,
-    imgMobile: sGanesh700,
-    quoteKey: "stories.ganesh.quote",
-    resultKey: "stories.ganesh.result",
-    name: "Ganesh Shinde",
+    img: sKishan,
+    imgMobile: sKishan700,
+    quoteKey: "stories.kishan.quote",
+    resultKey: "stories.kishan.result",
+    name: "Kishan Chavan",
+  },
+  {
+    img: sMahadeo,
+    imgMobile: sMahadeo700,
+    quoteKey: "stories.mahadeo.quote",
+    resultKey: "stories.mahadeo.result",
+    name: "Mahadeo Langote",
   },
   {
     img: sSantosh,
@@ -242,6 +255,20 @@ export const stories = [
     quoteKey: "stories.santosh.quote",
     resultKey: "stories.santosh.result",
     name: "Santosh Chavan",
+  },
+  {
+    img: sGanesh,
+    imgMobile: sGanesh700,
+    quoteKey: "stories.ganesh.quote",
+    resultKey: "stories.ganesh.result",
+    name: "Ganesh Shinde",
+  },
+  {
+    img: sMahesh,
+    imgMobile: sMahesh700,
+    quoteKey: "stories.mahesh.quote",
+    resultKey: "stories.mahesh.result",
+    name: "Mahesh Shinde",
   },
 ];
 
